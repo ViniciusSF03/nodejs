@@ -38,7 +38,20 @@ app.getMaxListeners("/register", (request, response) => {
 })
 
 app.get("/", (request, response)=>{
-    resposta.render("home")
+
+    const sql = 'SELECY * FROM books'
+
+    conn.query(sql, (error, data) =>{
+        if (error){
+            return console.log(error)
+        }
+
+        const books = data 
+        console.log(books)
+
+        resposta.render("home", {books})
+    })
+    
 })
 const conn = mysql.createConnection({
     host: "localhost",
